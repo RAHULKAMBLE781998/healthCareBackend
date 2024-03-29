@@ -1,33 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Unique } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'users' })
 @Unique(['email'])
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  email: string;
+    @Column({ unique: true })
+    email: string;
 
-  @Column()
-  password: string;
+    @Column()
+    password: string;
 
-  @Column()
-  firstName: string;
+    @Column({ nullable: true })
+    firstName: string;
 
-  @Column()
-  lastName: string;
+    @Column({ nullable: true })
+    lastName: string;
 
-  @Column({ default: false })
-  isAdmin: boolean;
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: Date;
 
-  // Add other user properties as needed
-
-  constructor(email: string, password: string, firstName: string, lastName: string, isAdmin: boolean) {
-    this.email = email;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.isAdmin = isAdmin;
-  }
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: Date;
 }
