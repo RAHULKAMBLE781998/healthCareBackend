@@ -1,34 +1,53 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
+import { ParseDatePipe } from 'src/common/pipes/date.pipe';
 
-@Controller('appointment')
+@Controller('appointments')
 export class AppointmentController {
-  constructor(private readonly appointmentService: AppointmentService) {}
+  constructor(private readonly appointmentService: AppointmentService) { }
 
   @Post()
-  create(@Body() createAppointmentDto: CreateAppointmentDto) {
-    return this.appointmentService.create(createAppointmentDto);
+  async createAppointment(
+    @Body('patientId') patientId: string,
+    @Body('doctorId') doctorId: string,
+    @Body('dateTime', ParseDatePipe) dateTime: Date,
+  ) {
+    return this.appointmentService.bookAppointment(
+      patientId,
+      doctorId,
+      dateTime,
+    );
   }
 
-  @Get()
-  findAll() {
-    return this.appointmentService.findAll();
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateAppointmentDto: UpdateAppointmentDto,
+  ) {
+    return this.appointmentService.updateAppointment(id, updateAppointmentDto.dateTime);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.appointmentService.findOne(+id);
+  @Put(':id/cancel')
+  async cancel(@Param('id') id: string) {
+    return this.appointmentService.cancelAppointment(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
-    return this.appointmentService.update(+id, updateAppointmentDto);
+  @Get('doctor/:doctorId/date/:date')
+  async getAppointmentsForDoctorOnDate(
+    @Param('doctorId') doctorId: string,
+    @Param('date', ParseDatePipe) date: Date,
+  ) {
+    return this.appointmentService.getAppointmentsForDoctorOnDate(doctorId, date);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.appointmentService.remove(+id);
+  @Get('doctor/:doctorId/date/:date/available-slots')
+  async getAvailableTimeSlotsForDoctor(
+    @Param('doctorId') doctorId: string,
+    @Param('date', ParseDatePipe) date: Date,
+  ) {
+    return this.appointmentService.findAvailableTimeSlotsForDoctor(doctorId, date);
   }
 }
+

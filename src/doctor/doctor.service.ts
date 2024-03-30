@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { Doctor } from './entities/doctor.entity';
 
 @Injectable()
 export class DoctorService {
-  create(createDoctorDto: CreateDoctorDto) {
-    return 'This action adds a new doctor';
+  constructor(
+    @InjectRepository(Doctor)
+    private readonly doctorRepository: Repository<Doctor>,
+  ) {}
+
+  async create(createDoctorDto: CreateDoctorDto): Promise<Doctor> {
+    const doctor = this.doctorRepository.create(createDoctorDto);
+    return this.doctorRepository.save(doctor);
   }
 
-  findAll() {
-    return `This action returns all doctor`;
+  async findAll(): Promise<Doctor[]> {
+    return this.doctorRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} doctor`;
+  async findOne(id: string): Promise<Doctor> {
+    const options: FindOneOptions<Doctor> = { where: { id } };
+    const doctor = await this.doctorRepository.findOne(options);
+    if (!doctor) {
+      throw new NotFoundException(`Doctor with ID ${id} not found`);
+    }
+    return doctor;
   }
 
-  update(id: number, updateDoctorDto: UpdateDoctorDto) {
-    return `This action updates a #${id} doctor`;
+  async update(id: string, updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
+    const doctor = await this.findOne(id);
+    this.doctorRepository.merge(doctor, updateDoctorDto);
+    return this.doctorRepository.save(doctor);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} doctor`;
+  async remove(id: string): Promise<void> {
+    const doctor = await this.findOne(id);
+    await this.doctorRepository.remove(doctor);
+  }
+
+  async findByname(name: string): Promise<Doctor[]> {
+    return this.doctorRepository.find({ where: { name } });
   }
 }

@@ -15,5 +15,5 @@ export class Doctor {
     contactDetails: string;
 
     @Column()
-    availability: string; // You might want to use a more specific type for availability
+    availability: string; 
 }

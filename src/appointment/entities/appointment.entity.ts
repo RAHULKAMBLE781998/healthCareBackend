@@ -1,8 +1,9 @@
 import { Doctor } from 'src/doctor/entities/doctor.entity';
 import { Patient } from 'src/patient/entities/patient.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique } from 'typeorm';
 
 @Entity()
+@Unique(['doctor', 'dateTime' , 'patient' ])
 export class Appointment {
     @PrimaryGeneratedColumn('uuid')
     id: string;
