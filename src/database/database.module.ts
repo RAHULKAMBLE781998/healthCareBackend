@@ -3,6 +3,8 @@ import { Patient } from 'src/patient/entities/patient.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Module, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Appointment } from 'src/appointment/entities/appointment.entity';
+import { Doctor } from 'src/doctor/entities/doctor.entity';
 @Module({
     imports: [
       TypeOrmModule.forRootAsync({
@@ -18,7 +20,7 @@ import { ConfigService } from '@nestjs/config';
         }),
         inject: [ConfigService],
       }),
-      TypeOrmModule.forFeature([Patient, User]), 
+      TypeOrmModule.forFeature([Patient, User , Doctor, Appointment]), 
     ],
   })
   export class DatabaseModule {
