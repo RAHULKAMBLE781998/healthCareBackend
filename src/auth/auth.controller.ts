@@ -5,9 +5,11 @@ import {
     HttpStatus,
     Post,
     Req,
+    UseGuards,
   } from '@nestjs/common';
   import { AuthService } from './auth.service';
-  import { AuthDto } from './dto';
+  import { AuthDto, RefreshDto } from './dto';
+import { RefreshTokenGuard } from './guard';
   
   @Controller('auth')
   export class AuthController {
@@ -23,4 +25,12 @@ import {
     signin(@Body() dto: AuthDto) {
       return this.authService.signin(dto);
     }
+
+    @UseGuards(RefreshTokenGuard)
+    @HttpCode(HttpStatus.OK)
+    @Post('refreshtoken')
+    refresh(@Body() dto: RefreshDto ,  @Req() req ) {
+      return this.authService.getAccessTokenByRefreshToken(dto.refresh_token,req.user);
+    }
+
   }  

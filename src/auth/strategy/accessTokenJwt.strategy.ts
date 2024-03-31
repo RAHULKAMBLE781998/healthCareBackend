@@ -8,7 +8,7 @@ import {
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy,'access-token',) {
+export class AccessTokenJwtStrategy extends PassportStrategy(Strategy,'access-token',) {
   constructor(
     config: ConfigService,
     private userService: UserService,
@@ -25,7 +25,6 @@ export class JwtStrategy extends PassportStrategy(Strategy,'access-token',) {
     email: string;
   }) {
     const user = await this.userService.findByEmail(payload.email);
-
     delete user.password;
     return user;
   }

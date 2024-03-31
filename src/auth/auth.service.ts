@@ -62,7 +62,34 @@ import { User } from 'src/user/entities/user.entity';
     async signToken(
       userId: number,
       email: string,
-    ): Promise<{ access_token: string }> {
+    ): Promise<{ access_token: string , refersh_token: string}> {
+      const payload = {
+        sub: userId,
+        email,
+      };
+      const secret = this.config.get('JWT_SECRET');
+  
+      const token = await this.jwt.signAsync(
+        payload,
+        {
+          expiresIn: '15m',
+          secret: secret,
+        },
+      );
+      
+      const accessToken = await this.getAccessTokenByUserId(userId,email)
+      const refershToken = await this.getRefreshTokenAndSaveToDB(userId,email)
+
+      return {
+        access_token: accessToken,
+        refersh_token: refershToken
+      };
+    }
+
+    async getAccessTokenByUserId(
+      userId: number,
+      email: string,
+    ) : Promise<string> {
       const payload = {
         sub: userId,
         email,
@@ -77,9 +104,67 @@ import { User } from 'src/user/entities/user.entity';
         },
       );
   
-      return {
-        access_token: token,
-      };
+      return token;
     }
+
+    async getAccessTokenByRefreshToken(
+      refreshToken: string,
+      user : User
+    ) : Promise< {access_token:string ,refresh_token:string} > {
+      const match = await argon.verify(user.hashedRefreshToken, refreshToken);
+
+      if(!match){
+        this.userService.update(user.id,{hashedRefreshToken:null})
+        throw new ForbiddenException(
+          'Access Denied. Please login Again',
+        );
+      }
+      
+      const payload = {
+        sub: user.id,
+        email: user.email,
+      };
+
+      const secret = this.config.get('JWT_SECRET');
+  
+      const token = await this.jwt.signAsync(
+        payload,
+        {
+          expiresIn: '15m',
+          secret: secret,
+        },
+      );
+      
+      const newRefreshToken = await this.getRefreshTokenAndSaveToDB(user.id,user.email);
+
+      return { access_token: token , refresh_token:newRefreshToken };
+    }
+
+
+    async getRefreshTokenAndSaveToDB(
+      userId: number,
+      email: string,
+    ): Promise<string> { 
+      const payload = {
+        sub: userId,
+        email,
+      };
+      const secret = this.config.get('REFRESH_SECRET');
+  
+      const token = await this.jwt.signAsync(
+        payload,
+        {
+          expiresIn: '1y',
+          secret: secret,
+        },
+      );
+      
+      const hashedRefreshToken = await argon.hash(token);
+      
+      this.userService.update(userId,{hashedRefreshToken})
+
+      return token;
+    }
+
   }
   
