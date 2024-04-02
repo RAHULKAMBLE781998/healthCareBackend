@@ -1,0 +1,672 @@
+{
+	"info": {
+		"_postman_id": "aa2f080b-5c87-4ea0-a784-190c71688e2f",
+		"name": "healthCare",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15233262"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"test2@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"test2@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExODY1NzQ1LCJleHAiOjE3NDM0MjMzNDV9.kPquqCs6NbVU1lY-bgZwv2aq_v1LUQ-rJBAVajl2iDA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/refreshtoken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"refreshtoken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patient",
+			"item": [
+				{
+					"name": "Create Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExNzgxMDA5LCJleHAiOjE3MTE3ODE5MDl9.jFu_ybHbyIR-T17p80EY_wWnUAv017UxfnT5P5rH52k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"buzz 2z\", \"dateOfBirth\": \"1999-01-01\", \"contactDetails\": \"123-456-7890\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/patient",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Patients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patient",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient  by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patient/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patient",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Patient",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"dateOfBirth\": \"1987-12-31T18:30:00.000Z\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/patient/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patient",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "e9c65553-29c5-4b9b-a651-d3af2422cd7a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/patient/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"patient",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "46b4f6e3-57d0-4254-bd72-06cc7609a82e"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "Create Doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExNzg1MjY1LCJleHAiOjE3MTE3ODYxNjV9.xc0FgeyKzMaFVF3anc8tvjSnGDsJ5Lv7aCQ7L3UetNc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer your_access_token_here"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dr. Mansi Kamble\",\n    \"department\":\"Cardiology\",\n    \"contactDetails\":\"7020012149\",\n    \"availability\":\"9-18\"\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:3000/doctor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Doctors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExNzg1MjY1LCJleHAiOjE3MTE3ODYxNjV9.xc0FgeyKzMaFVF3anc8tvjSnGDsJ5Lv7aCQ7L3UetNc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer your_access_token_here"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/doctor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExNzg1MjY1LCJleHAiOjE3MTE3ODYxNjV9.xc0FgeyKzMaFVF3anc8tvjSnGDsJ5Lv7aCQ7L3UetNc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer your_access_token_here",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/doctor/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"doctor",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2b414936-a376-45e1-aa5e-abb50b132404"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor By Name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExNzg1MjY1LCJleHAiOjE3MTE3ODYxNjV9.xc0FgeyKzMaFVF3anc8tvjSnGDsJ5Lv7aCQ7L3UetNc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer your_access_token_here"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/doctor/name/Dr.%20Smith",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"doctor",
+								"name",
+								"Dr.%20Smith"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExNzg1MjY1LCJleHAiOjE3MTE3ODYxNjV9.xc0FgeyKzMaFVF3anc8tvjSnGDsJ5Lv7aCQ7L3UetNc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer your_access_token_here"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"availability\": \"9-17\"\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:3000/doctor/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"doctor",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "dd79b815-ac96-4748-af84-9d422d624958"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiaWF0IjoxNzExNzg2MTg3LCJleHAiOjE3MTE3ODcwODd9.BVjoiBw6q325iaGlEmgRpcss_5PDiLtrBLHKnuMzTDA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer your_access_token_here"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/doctor/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"doctor",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0437201a-3957-44b9-beff-33b36e5a404f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Book Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"patientId\": \"88e83049-9e69-4274-9e9a-549835217d4d\", \"doctorId\": \"dd79b815-ac96-4748-af84-9d422d624958\", \"dateTime\": \"1711792716000\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/appointments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"dateTime\": \"NEW_DATE_TIME\"}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/appointments/:APPOINTMENT_ID",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								":APPOINTMENT_ID"
+							],
+							"variable": [
+								{
+									"key": "APPOINTMENT_ID",
+									"value": "1a4e30f2-6f1f-45be-94ec-4356ea3bb557"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/appointments/:appointment_id_here/cancel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								":appointment_id_here",
+								"cancel"
+							],
+							"variable": [
+								{
+									"key": "appointment_id_here",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointments for Doctor on Date",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/appointments/doctor/:doctor_id_here/date/2024-03-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								"doctor",
+								":doctor_id_here",
+								"date",
+								"2024-03-30"
+							],
+							"variable": [
+								{
+									"key": "doctor_id_here",
+									"value": "dd79b815-ac96-4748-af84-9d422d624958"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Time Slots for Doctor",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/appointments/doctor/:doctor_id_here/date/2024-03-30/available-slots",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								"doctor",
+								":doctor_id_here",
+								"date",
+								"2024-03-30",
+								"available-slots"
+							],
+							"variable": [
+								{
+									"key": "doctor_id_here",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
