@@ -7,7 +7,7 @@ import { AccessTokenGuard } from 'src/auth/guard';
 import { AsyncLocalStorage } from 'async_hooks';
 
 @Controller('appointments')
-//@UseGuards(AccessTokenGuard)
+@UseGuards(AccessTokenGuard)
 export class AppointmentController {
   private readonly logger = new Logger(AppointmentController.name);
   constructor(

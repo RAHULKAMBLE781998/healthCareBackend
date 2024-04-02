@@ -7,7 +7,7 @@ import { AccessTokenGuard } from 'src/auth/guard';
 import { ValidationPipe } from '@nestjs/common';
 
 @Controller('doctor')
-//@UseGuards(AccessTokenGuard)
+@UseGuards(AccessTokenGuard)
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
