@@ -32,7 +32,7 @@ export class DoctorController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
+  update(@Param('id') id: string, @Body(new ValidationPipe()) updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
     return this.doctorService.update(id, updateDoctorDto);
   }
 
@@ -40,8 +40,5 @@ export class DoctorController {
   remove(@Param('id') id: string): Promise<void> {
     return this.doctorService.remove(id);
   }
-}
-function UsePipes(arg0: ValidationPipe, arg1: any): (target: DoctorController, propertyKey: "create", descriptor: TypedPropertyDescriptor<(createDoctorDto: CreateDoctorDto) => Promise<Doctor>>) => void | TypedPropertyDescriptor<(createDoctorDto: CreateDoctorDto) => Promise<Doctor>> {
-  throw new Error('Function not implemented.');
 }
 

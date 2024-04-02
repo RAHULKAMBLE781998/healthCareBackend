@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Repository } from 'typeorm';
+import { FindOneOptions, ILike, Repository } from 'typeorm';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { Doctor } from './entities/doctor.entity';
@@ -42,6 +42,6 @@ export class DoctorService {
   }
 
   async findByname(name: string): Promise<Doctor[]> {
-    return this.doctorRepository.find({ where: { name } });
+    return this.doctorRepository.find({ where: { name: ILike(`%${name}%`) } });
   }
 }
