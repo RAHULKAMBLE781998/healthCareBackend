@@ -1,13 +1,22 @@
+version: '3.8'
 services:
   dev-db:
     image: postgres
     ports:
-      - 5434:5432
+      - "5434:5432" # Maps port 5434 on your host to port 5432 on the container
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
     networks:
       - personalNetwork
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379" # Maps the default Redis port 6379 on the container to the same port on your host
+    networks:
+      - personalNetwork
+
 networks:
   personalNetwork:

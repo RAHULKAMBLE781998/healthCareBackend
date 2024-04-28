@@ -6,13 +6,16 @@ import {
     Post,
     Req,
     UseGuards,
+    UseInterceptors,
     ValidationPipe,
   } from '@nestjs/common';
   import { AuthService } from './auth.service';
   import { AuthDto, RefreshDto } from './dto';
 import { RefreshTokenGuard } from './guard';
+import { DebounceInterceptor } from 'src/redis/interceptors/debounce.interceptor';
   
   @Controller('auth')
+  @UseInterceptors(DebounceInterceptor)
   export class AuthController {
     constructor(private authService: AuthService) {}
   

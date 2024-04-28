@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe, Logger, Req, UseFilters } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ValidationPipe, Logger, Req, UseFilters, UseInterceptors } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { AccessTokenGuard } from 'src/auth/guard';
 import { AsyncLocalStorage } from 'async_hooks';
 import { AllExceptionsFilter } from 'src/exceptions/all-exception.filter';
+import { DebounceInterceptor } from 'src/redis/interceptors/debounce.interceptor';
 
 @Controller('patient')
+@UseInterceptors(DebounceInterceptor)
 @UseGuards(AccessTokenGuard)
 @UseFilters(new AllExceptionsFilter())
 export class PatientController {

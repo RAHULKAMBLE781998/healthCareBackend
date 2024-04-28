@@ -1,12 +1,14 @@
-import { Body, Controller, Get, Logger, Param, Post, Put, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post, Put, Req, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { ParseDatePipe } from 'src/common/pipes/date.pipe';
 import { AccessTokenGuard } from 'src/auth/guard';
 import { AsyncLocalStorage } from 'async_hooks';
+import { DebounceInterceptor } from 'src/redis/interceptors/debounce.interceptor';
 
 @Controller('appointments')
+@UseInterceptors(DebounceInterceptor)
 @UseGuards(AccessTokenGuard)
 export class AppointmentController {
   private readonly logger = new Logger(AppointmentController.name);

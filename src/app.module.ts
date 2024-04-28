@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { AlsModule } from './als/als.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -17,8 +18,10 @@ import { AlsModule } from './als/als.module';
     UserModule,
     AppointmentModule,
     DoctorModule,
-    AlsModule],
+    AlsModule,
+    RedisModule],
   controllers: [],
   providers: [],
+  exports: [RedisModule],
 })
 export class AppModule {}
