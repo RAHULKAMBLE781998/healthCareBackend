@@ -61,19 +61,6 @@ import { User } from 'src/user/entities/user.entity';
       userId: number,
       email: string,
     ): Promise<{ access_token: string , refersh_token: string}> {
-      const payload = {
-        sub: userId,
-        email,
-      };
-      const secret = this.config.get('JWT_SECRET');
-  
-      const token = await this.jwt.signAsync(
-        payload,
-        {
-          expiresIn: '15m',
-          secret: secret,
-        },
-      );
       
       const accessToken = await this.getAccessTokenByUserId(userId,email)
       const refershToken = await this.getRefreshTokenAndSaveToDB(userId,email)
