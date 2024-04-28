@@ -18,5 +18,5 @@ export class Appointment {
     dateTime: Date;
 
     @Column()
-    status: string; // Enum might be better for status
+    status: string;
 }

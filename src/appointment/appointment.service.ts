@@ -30,7 +30,7 @@ export class AppointmentService {
       });
 
       await this.appointmentRepository.save(appointment);
-      return appointment; // Return the created appointment
+      return appointment; 
     } catch (error) {
       if (error.code === '23505') { // PostgreSQL error code for unique constraint violation
         throw new ConflictException('Appointment time slot is already booked. Please choose a different time.');
