@@ -7,7 +7,7 @@ how to run -
 
 Features - 
 1. Refresh token Invalidation
-2. Unique Appointment index making sure no doctor-patient appointment is overlapping [@Unique(['doctor', 'dateTime', 'patient'])] 
+2. Unique Appointment index making sure no doctor-patient appointment are overlapping [@Unique(['doctor', 'dateTime', 'patient'])] 
 3. TypeORM
 4. AsyncLocalStorage
 5. RateLimiting 
